@@ -47,4 +47,10 @@ public class TecnicoResource {
         return ResponseEntity.ok().body(new TecnicoDTO(obj));
     }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<TecnicoDTO> delete(@PathVariable Integer id){
+        tecnicoService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
