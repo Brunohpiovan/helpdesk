@@ -3,6 +3,8 @@ package com.bruno.helpdesk.resources.exceptions;
 import com.bruno.helpdesk.services.exceptions.DataIntegrityViolationException;
 import com.bruno.helpdesk.services.exceptions.ObjectNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -36,6 +38,21 @@ public class ResourceExceptionHandler {
         }
 
         return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    }
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<StandardError> cpfValidationErrors(ConstraintViolationException ex, HttpServletRequest request){
+
+        ValidationError errors = new ValidationError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
+                "Validation Error", "Erro na validação dos campos", request.getRequestURI());
+
+        // Itera sobre as violações da ConstraintViolationException
+        for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
+            String fieldName = violation.getPropertyPath().toString();  // Nome do campo que violou a validação
+            String errorMessage = violation.getMessage();  // Mensagem de erro associada à violação
+            errors.addError(fieldName, errorMessage);
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
 }
