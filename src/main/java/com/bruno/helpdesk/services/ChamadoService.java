@@ -4,6 +4,7 @@ import com.bruno.helpdesk.domain.Chamado;
 import com.bruno.helpdesk.domain.Cliente;
 import com.bruno.helpdesk.domain.Tecnico;
 import com.bruno.helpdesk.domain.dtos.ChamadoDTO;
+import com.bruno.helpdesk.domain.dtos.ClienteDTO;
 import com.bruno.helpdesk.domain.enums.Prioridade;
 import com.bruno.helpdesk.domain.enums.Status;
 import com.bruno.helpdesk.repositories.ChamadoRepository;
@@ -12,6 +13,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +42,13 @@ public class ChamadoService {
         return repository.save(newChamado(objDTO));
     }
 
+    public Chamado update(Integer id, @Valid ChamadoDTO objDTO) {
+        objDTO.setId(id);
+        Chamado oldObj = findbyId(id);
+        oldObj = newChamado(objDTO);
+        return repository.save(oldObj);
+    }
+
     private Chamado newChamado(ChamadoDTO obj){
         Tecnico tecnico = tecnicoService.findById(obj.getTecnico());
         Cliente cliente = clienteService.findById(obj.getCliente());
@@ -50,6 +59,10 @@ public class ChamadoService {
             chamado.setId(obj.getId());
         }
 
+        if(obj.getStatus().equals(2)){
+            chamado.setDataFechamento(LocalDate.now());
+        }
+
         chamado.setTecnico(tecnico);
         chamado.setCliente(cliente);
         chamado.setPrioridade(Prioridade.toEnum(obj.getPrioridade()));
@@ -58,4 +71,6 @@ public class ChamadoService {
         chamado.setObservacoes(obj.getObservacoes());
         return chamado;
     }
+
+
 }

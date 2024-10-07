@@ -3,6 +3,7 @@ package com.bruno.helpdesk.resources;
 
 import com.bruno.helpdesk.domain.Chamado;
 import com.bruno.helpdesk.domain.dtos.ChamadoDTO;
+import com.bruno.helpdesk.domain.dtos.ClienteDTO;
 import com.bruno.helpdesk.services.ChamadoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,11 @@ public class ChamadoResource {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 
         return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ChamadoDTO> update(@PathVariable Integer id,@Valid @RequestBody ChamadoDTO objDTO){
+        Chamado obj = service.update(id,objDTO);
+        return ResponseEntity.ok().body(new ChamadoDTO(obj));
     }
 }
