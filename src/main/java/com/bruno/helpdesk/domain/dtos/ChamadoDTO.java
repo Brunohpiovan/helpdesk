@@ -8,6 +8,7 @@ import com.bruno.helpdesk.domain.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -23,11 +24,18 @@ public class ChamadoDTO implements Serializable {
     private LocalDate dataAbertura = LocalDate.now();
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataFechamento;
+    @NotNull(message = "O campo prioridade é requerido.")
+
+    @NotNull(message = "O campo prioridade é requerido.")
     private Integer prioridade;
+    @NotNull(message = "O campo status é requerido.")
     private Integer status;
+    @NotNull(message = "O campo titulo é requerido.")
     private String titulo;
     private String observacoes;
+    @NotNull(message = "O campo tecnico é requerido.")
     private Integer tecnico;
+    @NotNull(message = "O campo cliente é requerido.")
     private Integer cliente;
     private String nomeTecnico;
     private String nomeCliente;
