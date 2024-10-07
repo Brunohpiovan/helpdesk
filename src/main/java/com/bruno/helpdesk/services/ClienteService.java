@@ -9,6 +9,7 @@ import com.bruno.helpdesk.services.exceptions.DataIntegrityViolationException;
 import com.bruno.helpdesk.services.exceptions.ObjectNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,9 @@ public class ClienteService {
     @Autowired
     private PessoaRepository pessoaRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
     public Cliente findById(Integer id){
         Optional<Cliente> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto nao encontrado! Id: "+ id));
@@ -33,6 +37,7 @@ public class ClienteService {
 
     public Cliente create(ClienteDTO objDTO) {
         objDTO.setId(null);
+        objDTO.setSenha(encoder.encode(objDTO.getSenha()));
         validaPorCpfeEmail(objDTO);
         Cliente newObj = new Cliente(objDTO);
         return repository.save(newObj);
