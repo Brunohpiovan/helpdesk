@@ -1,9 +1,11 @@
 package com.bruno.helpdesk.security;
 
 import com.bruno.helpdesk.domain.enums.Perfil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.Serial;
 import java.util.Collection;
@@ -20,12 +22,18 @@ public class UserSS implements UserDetails {
     private String email;
     private String senha;
     private Collection<? extends GrantedAuthority> authorities;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserSS(Integer id, String email, String senha, Set<Perfil> perfis) {
         this.id = id;
         this.email = email;
         this.senha = senha;
         this.authorities = perfis.stream().map(x -> new SimpleGrantedAuthority(x.getDescricao())).collect(Collectors.toSet());
+    }
+
+    public boolean checkPassword(String rawPassword) {
+        return passwordEncoder.matches(rawPassword, senha);
     }
 
     @Override
@@ -35,7 +43,7 @@ public class UserSS implements UserDetails {
 
     @Override
     public String getPassword() {
-        return senha;
+        return passwordEncoder.encode(senha);
     }
 
     @Override
@@ -66,4 +74,5 @@ public class UserSS implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
