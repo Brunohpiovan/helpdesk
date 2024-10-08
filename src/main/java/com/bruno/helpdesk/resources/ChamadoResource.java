@@ -5,7 +5,7 @@ import com.bruno.helpdesk.domain.Chamado;
 import com.bruno.helpdesk.domain.dtos.ChamadoDTO;
 import com.bruno.helpdesk.domain.dtos.ClienteDTO;
 import com.bruno.helpdesk.services.ChamadoService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +32,7 @@ public class ChamadoResource {
     @GetMapping
     public ResponseEntity<List<ChamadoDTO>> findAll(){
         List<Chamado> list = service.findAll();
-        List<ChamadoDTO> listDTO = list.stream().map(ChamadoDTO::new).toList();
+        List<ChamadoDTO> listDTO = list.stream().map(ChamadoDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
     }
 

@@ -3,7 +3,7 @@ package com.bruno.helpdesk.resources;
 import com.bruno.helpdesk.domain.Cliente;
 import com.bruno.helpdesk.domain.dtos.ClienteDTO;
 import com.bruno.helpdesk.services.ClienteService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/clientes")
@@ -28,7 +29,7 @@ public class ClienteResource {
     @GetMapping
     public ResponseEntity<List<ClienteDTO>> findAll(){
         List<Cliente> list = ClienteService.findAll();
-        List<ClienteDTO> listDTO = list.stream().map(ClienteDTO::new).toList();
+        List<ClienteDTO> listDTO = list.stream().map(ClienteDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
     }
 

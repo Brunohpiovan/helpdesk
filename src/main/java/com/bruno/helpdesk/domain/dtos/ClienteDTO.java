@@ -3,9 +3,8 @@ package com.bruno.helpdesk.domain.dtos;
 import com.bruno.helpdesk.domain.Cliente;
 import com.bruno.helpdesk.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -14,7 +13,6 @@ import java.util.stream.Collectors;
 
 public class ClienteDTO implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = 1L;
 
     protected Integer id;

@@ -3,7 +3,7 @@ package com.bruno.helpdesk.resources;
 import com.bruno.helpdesk.domain.Tecnico;
 import com.bruno.helpdesk.domain.dtos.TecnicoDTO;
 import com.bruno.helpdesk.services.TecnicoService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +29,7 @@ public class TecnicoResource {
     @GetMapping
     public ResponseEntity<List<TecnicoDTO>> findAll(){
         List<Tecnico> list = tecnicoService.findAll();
-        List<TecnicoDTO> listDTO = list.stream().map(TecnicoDTO::new).toList();
+        List<TecnicoDTO> listDTO = list.stream().map(TecnicoDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
     }
 

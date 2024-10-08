@@ -3,10 +3,9 @@ package com.bruno.helpdesk.domain;
 import com.bruno.helpdesk.domain.dtos.ClienteDTO;
 import com.bruno.helpdesk.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
-import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +13,6 @@ import java.util.stream.Collectors;
 @Entity
 public class Cliente extends Pessoa{
 
-    @Serial
     private static final long serialVersionUID = 1L;
 
     @JsonIgnore

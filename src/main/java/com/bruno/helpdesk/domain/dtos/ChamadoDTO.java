@@ -1,22 +1,14 @@
 package com.bruno.helpdesk.domain.dtos;
 
 import com.bruno.helpdesk.domain.Chamado;
-import com.bruno.helpdesk.domain.Cliente;
-import com.bruno.helpdesk.domain.Tecnico;
-import com.bruno.helpdesk.domain.enums.Prioridade;
-import com.bruno.helpdesk.domain.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 
 public class ChamadoDTO implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = 1L;
 
     private Integer id;

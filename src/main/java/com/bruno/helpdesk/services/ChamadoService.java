@@ -9,7 +9,7 @@ import com.bruno.helpdesk.domain.enums.Prioridade;
 import com.bruno.helpdesk.domain.enums.Status;
 import com.bruno.helpdesk.repositories.ChamadoRepository;
 import com.bruno.helpdesk.services.exceptions.ObjectNotFoundException;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
