@@ -46,6 +46,10 @@ public class TecnicoService {
     public Tecnico update(Integer id, @Valid TecnicoDTO objDTO) {
         objDTO.setId(id);
         Tecnico oldObj = findById(id);
+
+        if(!objDTO.getSenha().equals(oldObj)){
+            objDTO.setSenha(encoder.encode(objDTO.getSenha()));
+        }
         validaPorCpfeEmail(objDTO);
         oldObj = new Tecnico(objDTO);
         return repository.save(oldObj);
